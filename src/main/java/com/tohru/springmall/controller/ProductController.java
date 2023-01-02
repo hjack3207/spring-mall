@@ -1,6 +1,7 @@
 package com.tohru.springmall.controller;
 
 import com.tohru.springmall.constant.ProductCategory;
+import com.tohru.springmall.dto.ProductQueryParams;
 import com.tohru.springmall.dto.ProductRequest;
 import com.tohru.springmall.model.Product;
 import com.tohru.springmall.service.ProductService;
@@ -22,7 +23,11 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProducts(
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search) {
-        List<Product> productList = productService.getProducts(category, search);
+
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
