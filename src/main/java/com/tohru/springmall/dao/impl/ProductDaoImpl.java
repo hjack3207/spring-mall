@@ -32,12 +32,12 @@ public class ProductDaoImpl implements ProductDao {
         Map<String, Object> map = new HashMap<>();
 
         if(category != null) {
-            sql = sql + "AND category = :category";
+            sql = sql + "AND category = :category ";
             map.put("category", category.name());
         }
 
         if(search != null) {
-            sql = sql + "AND product_name Like :search";
+            sql = sql + "AND product_name Like :search ";
             map.put("search", "%" + search + "%");
         }
 
