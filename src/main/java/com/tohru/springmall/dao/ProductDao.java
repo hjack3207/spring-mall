@@ -1,5 +1,6 @@
 package com.tohru.springmall.dao;
 
+import com.tohru.springmall.constant.ProductCategory;
 import com.tohru.springmall.dto.ProductRequest;
 import com.tohru.springmall.model.Product;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface ProductDao {
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category, String search);
 
     Product getProductById(Integer productId);
 

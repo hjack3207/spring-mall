@@ -1,5 +1,6 @@
 package com.tohru.springmall.service.impl;
 
+import com.tohru.springmall.constant.ProductCategory;
 import com.tohru.springmall.dao.ProductDao;
 import com.tohru.springmall.dto.ProductRequest;
 import com.tohru.springmall.model.Product;
@@ -16,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts() {
-        return productDao.getProducts();
+    public List<Product> getProducts(ProductCategory category, String search) {
+        return productDao.getProducts(category, search);
     }
 
     @Override
