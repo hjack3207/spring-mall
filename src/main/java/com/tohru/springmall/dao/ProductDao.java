@@ -3,7 +3,11 @@ package com.tohru.springmall.dao;
 import com.tohru.springmall.dto.ProductRequest;
 import com.tohru.springmall.model.Product;
 
+import java.util.List;
+
 public interface ProductDao {
+
+    List<Product> getProducts();
 
     Product getProductById(Integer productId);
 

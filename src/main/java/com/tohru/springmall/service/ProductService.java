@@ -3,7 +3,11 @@ package com.tohru.springmall.service;
 import com.tohru.springmall.dto.ProductRequest;
 import com.tohru.springmall.model.Product;
 
+import java.util.List;
+
 public interface ProductService {
+
+    List<Product> getProducts();
 
     Product getProductById(Integer productId);
 
