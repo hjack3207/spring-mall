@@ -22,7 +22,7 @@ import java.util.Map;
 public class ProductDaoImpl implements ProductDao {
 
     @Autowired
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public Integer countProduct(ProductQueryParams productQueryParams) {
