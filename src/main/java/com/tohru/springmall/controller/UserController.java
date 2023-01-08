@@ -1,5 +1,6 @@
 package com.tohru.springmall.controller;
 
+import com.tohru.springmall.dto.UserLoginRequest;
 import com.tohru.springmall.dto.UserRegisterRequest;
 import com.tohru.springmall.model.User;
 import com.tohru.springmall.service.UserService;
@@ -26,5 +27,13 @@ public class UserController {
         User user = userService.getUserById(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) {
+        User user = userService.login(userLoginRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+
     }
 }

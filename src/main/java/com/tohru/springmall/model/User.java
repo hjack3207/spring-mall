@@ -1,7 +1,6 @@
 package com.tohru.springmall.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
@@ -14,7 +13,7 @@ public class User {
     private String password;
 
     private Date createdDate;
-    private Date lastModified;
+    private Date lastModifiedDate;
 
 
     public Integer getUserId() {
@@ -49,12 +48,12 @@ public class User {
         this.createdDate = createdDate;
     }
 
-    public Date getLastModified() {
-        return lastModified;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
 }

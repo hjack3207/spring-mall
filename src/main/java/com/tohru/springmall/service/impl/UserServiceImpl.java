@@ -1,6 +1,7 @@
 package com.tohru.springmall.service.impl;
 
 import com.tohru.springmall.dao.UserDao;
+import com.tohru.springmall.dto.UserLoginRequest;
 import com.tohru.springmall.dto.UserRegisterRequest;
 import com.tohru.springmall.model.User;
 import com.tohru.springmall.service.UserService;
@@ -38,4 +39,20 @@ public class UserServiceImpl implements UserService {
         return userDao.createUser(userRegisterRequest);
     }
 
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if (user == null) {
+            log.warn("該 email {} 尚未註冊", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getPassword().equals(userLoginRequest.getPassword())) {
+            return user;
+        } else {
+            log.warn("email {} 的密碼不正確", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
