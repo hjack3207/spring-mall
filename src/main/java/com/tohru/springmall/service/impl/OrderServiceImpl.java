@@ -4,6 +4,7 @@ import com.tohru.springmall.dao.OrderDao;
 import com.tohru.springmall.dao.ProductDao;
 import com.tohru.springmall.dto.BuyItem;
 import com.tohru.springmall.dto.CreateOrderRequest;
+import com.tohru.springmall.model.Order;
 import com.tohru.springmall.model.OrderItem;
 import com.tohru.springmall.model.Product;
 import com.tohru.springmall.service.OrderService;
@@ -22,6 +23,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+
+        order.setOrderItemList(orderItemList);
+
+        return order;
+    }
 
     @Transactional
     @Override
