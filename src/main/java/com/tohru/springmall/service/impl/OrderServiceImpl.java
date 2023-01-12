@@ -5,6 +5,7 @@ import com.tohru.springmall.dao.ProductDao;
 import com.tohru.springmall.dao.UserDao;
 import com.tohru.springmall.dto.BuyItem;
 import com.tohru.springmall.dto.CreateOrderRequest;
+import com.tohru.springmall.dto.OrderQueryParams;
 import com.tohru.springmall.model.Order;
 import com.tohru.springmall.model.OrderItem;
 import com.tohru.springmall.model.Product;
@@ -36,6 +37,24 @@ public class OrderServiceImpl implements OrderService {
     private UserDao userDao;
 
     @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        return orderDao.countOrder(orderQueryParams);
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        List<Order> orderList = orderDao.getOrders(orderQueryParams);
+
+        for (Order order : orderList) {
+            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
+
+            order.setOrderItemList(orderItemList);
+        }
+
+        return orderList;
+    }
+
+    @Override
     public Order getOrderById(Integer orderId) {
         Order order = orderDao.getOrderById(orderId);
 
@@ -52,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
         User user = userDao.getUserById(userId);
 
-        if(user == null) {
+        if (user == null) {
             log.warn("該userId {} 不存在", userId);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -61,15 +80,15 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderItem> orderItemList = new ArrayList<>();
 
-        for(BuyItem buyItem : createOrderRequest.getBuyItemList()) {
+        for (BuyItem buyItem : createOrderRequest.getBuyItemList()) {
             Product product = productDao.getProductById(buyItem.getProductId());
 
             //檢查商品是否存在 庫存是否足夠
-            if(product == null) {
+            if (product == null) {
                 log.warn("商品 {} 不存在", buyItem.getProductId());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
-            if(product.getStock() < buyItem.getQuantity()) {
+            if (product.getStock() < buyItem.getQuantity()) {
                 log.warn("商品 {} 庫存不足，無法購買。剩餘庫存 {} ，欲購買數量 {}",
                         buyItem.getProductId(), product.getStock(), buyItem.getQuantity());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
